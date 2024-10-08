@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate ,login 
+from django.contrib.auth import authenticate ,login , logout
 from django.contrib.auth.decorators import  permission_required , login_required
 
 # Create your views here.
 
 def register(request):
-    if request == 'POST':
+    if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
@@ -14,7 +14,7 @@ def register(request):
             login(request, user)
             return redirect ('home')
     else:
-        form =UserCreationForm
+        form =UserCreationForm()
     return render(request, "register.html", {'form' : form}) 
        
 
@@ -26,7 +26,7 @@ def login_view(request):
         if  user is not None:
             login(request,user)
             return redirect('home')
-    return render(request,'login.html')    
+    return render(request,'login.html',{'error':'Credenciales invalidas'})    
 
 @permission_required('users.view_ventas',raise_exception=True)
 def ventas_view(request):
@@ -38,11 +38,23 @@ def compras_view(request):
 
 @permission_required('user.view_inventarios',raise_exception=True)
 def inventario_view(request):
-    return render(request, 'inventario.html',{'title':'Inventario'})
+    return render(request, 'inventarios.html',{'title':'Inventario'})
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return render(request,'logout.html')
 
 @login_required
 def home(request):
-    return render(request,'home.html',{})
+    user = request.user
+    context = {
+        'can_view_ventas': user.has_perm('user.view_ventas'),
+        'can_view_compras': user.has_perm('user.view_compras'),
+        'can_view_inventarios': user.has_perm('user.view_inventarios'),
+        
+    }
+    return render(request,'home.html', context)
 
 
 

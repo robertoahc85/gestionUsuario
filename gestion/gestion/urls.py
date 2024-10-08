@@ -26,5 +26,5 @@ urlpatterns = [
     # path('ventas/',views.ventas_view,name='ventas'),
     # path('compras/',views.compras_view,name='compras'),
     # path('inventario/',views.inventario_view,name='inventario'),
-    path('',views.home,name='home'),
+    # path('',views.home,name='home'),
 ]

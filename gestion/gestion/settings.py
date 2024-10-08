@@ -28,7 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'users.CustomUser'
-LOGIN_URL = 'login' 
+LOGIN_REDIRECT_URL = 'login' # Redirigir despues de iniciar sesion
+LOGOUT_REDIRECT_URL = 'login' # redirigir despues de cerrar sesion
+LOGIN_URL = 'login' # Ruta de login
+
 
 
 # Application definition
