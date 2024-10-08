@@ -49,13 +49,15 @@ def logout_view(request):
 def home(request):
     user = request.user
     context = {
-        'can_view_ventas': user.has_perm('user.view_ventas'),
-        'can_view_compras': user.has_perm('user.view_compras'),
-        'can_view_inventarios': user.has_perm('user.view_inventarios'),
+        'can_view_ventas': user.has_perm('users.view_ventas'),
+        'can_view_compras': user.has_perm('users.view_compras'),
+        'can_view_inventarios': user.has_perm('users.view_inventarios'),
         
     }
     return render(request,'home.html', context)
 
-
+def page_not_found_view(request,exception):
+    return render(request, '404.html', status =['error 404'])
+    
 
 

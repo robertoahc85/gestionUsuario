@@ -6,6 +6,7 @@ class CustomUser(AbstractUser):
         permissions = [
             ("view_ventas","Puede ver la seccion de Ventas"),
             ("view_compras","Puede ver la seccion de compras"),
-            ("view_inventarios", "Puede ver la seccion de Inventarios")
+            ("view_inventarios", "Puede ver la seccion de Inventarios"),
+            #Reporte y finanzas
         ]
 # Create your models here.

@@ -1,6 +1,7 @@
 from django.urls import path
 from  users import views
 from django.contrib.auth import  views  as auth_views
+from django.conf.urls import handler404
 
 urlpatterns = [
     path('register/',views.register,name='register'),
@@ -11,3 +12,5 @@ urlpatterns = [
     path('logout/',views.logout_view,name='logout'),
     path('',views.home,name='home'),
 ]
+
+handler404 ='users.views.page_not_found_view'
