@@ -2,19 +2,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate ,login , logout
 from django.contrib.auth.decorators import  permission_required , login_required
+from .form import CustomUserCreationForm
 
 # Create your views here.
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user.groups.add(request.POST.get('group'))
             login(request, user)
             return redirect ('home')
     else:
-        form =UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, "register.html", {'form' : form}) 
        
 
@@ -32,11 +32,11 @@ def login_view(request):
 def ventas_view(request):
     return render(request,'ventas.html', {'title': 'Ventas'})
 
-@permission_required('user.view_compras',raise_exception=True)
+@permission_required('users.view_compras',raise_exception=True)
 def compras_view(request):
     return render(request, 'compras.html',{'title':'Compras'})
 
-@permission_required('user.view_inventarios',raise_exception=True)
+@permission_required('users.view_inventarios',raise_exception=True)
 def inventario_view(request):
     return render(request, 'inventarios.html',{'title':'Inventario'})
 
@@ -56,8 +56,8 @@ def home(request):
     }
     return render(request,'home.html', context)
 
-def page_not_found_view(request,exception):
-    return render(request, '404.html', status =['error 404'])
+def custom_403_view(request, exception):
+    return render(request, '403.html', status=403)
     
 
 

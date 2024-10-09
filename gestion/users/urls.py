@@ -1,7 +1,7 @@
 from django.urls import path
 from  users import views
 from django.contrib.auth import  views  as auth_views
-from django.conf.urls import handler404
+from django.conf.urls import handler403
 
 urlpatterns = [
     path('register/',views.register,name='register'),
@@ -13,4 +13,4 @@ urlpatterns = [
     path('',views.home,name='home'),
 ]
 
-handler404 ='users.views.page_not_found_view'
+handler403 ='users.views.custom_403_view'
